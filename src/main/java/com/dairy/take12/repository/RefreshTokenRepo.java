@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface RefreshTokenRepo extends MongoRepository<RefreshToken ,String> {
     Optional<RefreshToken> findByToken(String token);
     boolean existsByToken(String token);

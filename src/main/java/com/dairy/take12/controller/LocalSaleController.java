@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Objects;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("/localSale")
 @RestController
@@ -38,14 +40,11 @@ public class LocalSaleController {
                 System.out.println(creditMilk);
                 customerBalance.setBalanceCattleFeed(localSale.getTotalValue()+creditMilk);
                 customerBalanceRepo.save(customerBalance);
-                localSaleRepo.save(localSale);
                 System.out.println(localSale.getId());
-                return ResponseEntity.ok(localSale);
             }
-            else {
-              return   ResponseEntity.status(HttpStatus.CONFLICT).body("local sale is not credit");
-            }
-
+            System.out.println("localsale paytype is "+localSale.getPaymentType());
+            localSaleRepo.save(localSale);
+            return ResponseEntity.ok(localSale);
         }
         catch (Exception e)
         {
@@ -54,7 +53,6 @@ public class LocalSaleController {
         }
 
     }
-
     @PostMapping("/delete")
     public ResponseEntity deleteMilkSale(@RequestBody LocalSale localSale)
     {
@@ -80,4 +78,25 @@ public class LocalSaleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("exception while deleting local sell ");
         }
     }
+
+    @GetMapping("/getAllLocalSaleEntry/{adminId}/{date}")
+    public ResponseEntity<?> getLocalSaleForDay(@PathVariable String date, @PathVariable String adminId) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(date);
+
+            // End of the day (23:59:59)
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            Date endDate = calendar.getTime();
+
+            List<LocalSale> localSaleList = localSaleRepo.findByAdminIdAndDateBetween(adminId, startDate, endDate);
+            return ResponseEntity.ok(localSaleList);
+        } catch (Exception e) {
+            System.out.println("exception inget local sale for day "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 }

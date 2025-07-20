@@ -5,7 +5,9 @@ import com.dairy.take12.model.CattleFeedSell;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CattleFeedSellRepo extends MongoRepository<CattleFeedSell,String> {
     List<CattleFeedSell> findAllByAdminId(String adminId);
 }

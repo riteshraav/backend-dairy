@@ -4,6 +4,7 @@ import com.dairy.take12.model.*;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 public interface SearchRepo {
     Admin findByPhone(String text);

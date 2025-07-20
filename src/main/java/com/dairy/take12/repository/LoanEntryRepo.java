@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface LoanEntryRepo extends MongoRepository<LoanEntry,String> {
     List<LoanEntry> findAllByAdminId(String adminId);
 
