@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface LocalSaleRepo extends MongoRepository<LocalSale,String> {
     List<LocalSale> findByAdminIdAndDateBetween(String adminId, Date startDate, Date endDate);
+
+    List<LocalSale> findByAdminIdAndMilkTypeAndDateBetween(String adminId, String buffalo, Date startDate, Date endDate);
 }

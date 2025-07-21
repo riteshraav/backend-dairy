@@ -98,5 +98,26 @@ public class LocalSaleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+    @PostMapping("/getAllLocalSaleEntry/{adminId}/{fromDate}/{toDate}/{isBuffaloSelected}/{isCowSelected}")
+    public ResponseEntity<?> getLocalSaleForReport(@RequestBody List<String> customerCodeList, @PathVariable String fromDate, @PathVariable String adminId, @PathVariable String toDate, @PathVariable boolean isBuffaloSelected, @PathVariable boolean isCowSelected) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = sdf.parse(fromDate);
+            Date endDate = sdf.parse(toDate);
+            List<LocalSale> localSaleList = new ArrayList<>();
+            if (isBuffaloSelected)
+                    localSaleList = localSaleRepo.findByAdminIdAndMilkTypeAndDateBetween(adminId,"Buffalo", startDate, endDate);
+
+
+            if(isCowSelected)
+            {
+                    localSaleList.addAll( localSaleRepo.findByAdminIdAndMilkTypeAndDateBetween(adminId,  "Cow", startDate, endDate));
+            }
+            return ResponseEntity.ok(localSaleList);
+        } catch (Exception e) {
+            System.out.println("exception inget local sale for day "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 }
