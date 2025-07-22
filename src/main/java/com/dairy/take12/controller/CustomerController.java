@@ -59,6 +59,7 @@ public class CustomerController {
         }
         try{
             id  = jwtService.extractId(accessToken);
+            System.out.println("id is trying to login "+id);
         }
         catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -76,7 +77,8 @@ public class CustomerController {
             UserDetails adminDetails = context.getBean(AdminDetailsService.class).loadUserByUsername(id);
             if(jwtService.validateToken(accessToken,adminDetails))
             {
-                List<Customer> customerList = searchRepo.searchByAdmin(id);
+                System.out.println("id to login is "+id);
+                List<Customer> customerList = customerRepo.findByAdminId(id);
                 System.out.println("custommer list size is "+customerList.size());
                 customerList.forEach(c-> System.out.println(c.getName()));
                 return  ResponseEntity.ok(customerList);
