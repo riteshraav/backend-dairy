@@ -5,6 +5,8 @@ import com.dairy.take12.repository.SearchRepoImpl;
 import com.dairy.take12.util.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,11 +32,16 @@ public class MilkCollectionController {
         return milkCollectionRepo.findAll();
     }
     @PostMapping("/add")
-    public void addCollection(@RequestBody MilkCollection milkCollection) {
-
-
-        milkCollectionRepo.save(milkCollection);
-
+    public ResponseEntity<String> addCollection(@RequestBody MilkCollection milkCollection) {
+        try{
+            MilkCollection saved = milkCollectionRepo.save(milkCollection);
+            return ResponseEntity.ok(saved.getId());
+        }
+        catch (Exception e)
+        {
+            System.out.println("excepton in adding collection " + e.getMessage());
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
     @GetMapping("/getAllForCustomer/{customerId}/{adminId}")
     public List<MilkCollection> getAllCollection(@PathVariable String customerId,@PathVariable String adminId){
@@ -97,5 +104,17 @@ public class MilkCollectionController {
         Date from = dateConverter.convertToDate(fromDate);
         Date to = dateConverter.convertToDate(toDate);
         return searchRepoImpl.getCollectionForAdminForFromTo(adminId,from,to);
+    }
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<String> deleteMilkCollection(@PathVariable String id){
+            try{
+                milkCollectionRepo.deleteById(id);
+                return ResponseEntity.ok("Milk Collection deleted");
+            }
+            catch (Exception e)
+            {
+                System.out.println("exception in delete milk collection "+ e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            }
     }
 }

@@ -12,11 +12,17 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MilkCollection {
+        String id;
         String adminId;
         String customerId;
         double quantity;
         double fat;
-
+        double snf;
+        double rate;
+        double totalValue;
+        String time;
+        String milkType;
+        Date date;
         public String getAdminId() {
                 return adminId;
         }
@@ -24,6 +30,7 @@ public class MilkCollection {
         public void setAdminId(String adminId) {
                 this.adminId = adminId;
         }
+
 
         public String getCustomerId() {
                 return customerId;
@@ -96,11 +103,4 @@ public class MilkCollection {
         public void setDate(Date date) {
                 this.date = date;
         }
-
-        double snf;
-        double rate;
-        double totalValue;
-        String time;
-        String milkType;
-        Date date;
 }
