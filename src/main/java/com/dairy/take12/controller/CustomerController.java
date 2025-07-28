@@ -104,7 +104,16 @@ public class CustomerController {
     }
     @PostMapping("/update")
     public void updateCustomer(@RequestBody Customer customer) {
-        customerRepo.save(customer);
+        System.out.println("customr is is "+customer.get_id());
+        customer.setId();
+        try{
+            customerRepo.save(customer);
+        }
+        catch (Exception e)
+        {
+            System.out.println("exception in customer update "+e.getMessage());
+
+        }
     }
 
     @GetMapping("/search/{cid}")

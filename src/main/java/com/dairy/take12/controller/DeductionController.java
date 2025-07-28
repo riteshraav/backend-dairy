@@ -39,11 +39,7 @@ public class DeductionController {
 
     @Autowired
     private CattleFeedSellController cattleFeedSellController;
-    @Autowired
-    private CustomerAdvanceController customerAdvanceController;
 
-    @Autowired
-    private LoanEntryController loanEntryController;
     @PostMapping("/add")
     public void addDeduction(@RequestBody Deduction deduction){
         System.out.println("deduction updated");
@@ -53,7 +49,6 @@ public class DeductionController {
         cattleFeedSellController.sellCattleFeed(cattleFeedSell);
         deductionRepo.save(deduction);
     }
-
     @GetMapping("/get/{adminId}/{customerId}")
     public List<Deduction> getDeduction(@PathVariable String adminId, @PathVariable String customerId)
     {

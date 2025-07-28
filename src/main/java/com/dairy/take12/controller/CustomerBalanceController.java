@@ -1,7 +1,6 @@
 package com.dairy.take12.controller;
 
 
-import com.dairy.take12.model.Customer;
 import com.dairy.take12.model.CustomerBalance;
 import com.dairy.take12.repository.CustomerBalanceRepo;
 import com.dairy.take12.repository.SearchRepo;

@@ -10,7 +10,6 @@ import java.util.Date;
 @Document(collection = "loan_entry")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class LoanEntry {
     @Id
     String _id;
@@ -23,6 +22,20 @@ public class LoanEntry {
     String modeOfPayback;
     double remainingInterest;
     Date recentDeduction;
+
+    public LoanEntry(String _id, Date date, String customerId, String adminId, double loanAmount, String note, double interestRate, String modeOfPayback, double remainingInterest, Date recentDeduction) {
+        this._id = _id;
+        this.date = date;
+        this.customerId = customerId;
+        this.adminId = adminId;
+        this.loanAmount = loanAmount;
+        this.note = note;
+        this.interestRate = interestRate;
+        this.modeOfPayback = modeOfPayback;
+        this.remainingInterest = remainingInterest;
+        this.recentDeduction = recentDeduction;
+    }
+
     public void set_id()
     {
         _id = adminId + "_"+customerId;
