@@ -37,7 +37,7 @@ public class SecurityConfig
                                         "/admin/login","/advanceOrganization/**","/cattleFeedPurchase/**",
                                         "/cattleFeedSell/**","/cattleFeedSupplier/**","/customerAdvance/**",
                                         "/ledger/**","/loanEntry/**","/localSale/**","/sms/**","/customer/**","/customerBalance/**",
-                                        "/deduction/**","/collection/**","/matrix/**","/ping/**"
+                                        "/deduction/**","/collection/**","/matrix/**","/ping/**","/api/milk/**","/ws/**"
                                         )
 //                                .requestMatchers("/admin/refresh-token","/admin/search/{text}","/admin/add",
 //                                        "/admin/login"
